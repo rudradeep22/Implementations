@@ -7,7 +7,18 @@ vector<int> g[N];
 bool vis[N];
 
 bool dfs(int vertex, int parent){
+    if(vis[vertex])
+        return false;
 
+    vis[vertex] = true;
+    for(auto child : g[vertex]){
+        if(child == parent)
+            continue;
+        if (!dfs(child, vertex)){
+            return false;
+        }
+    }
+    return true;
 }
 
 int main(){
@@ -19,6 +30,12 @@ int main(){
         g[v1].push_back(v2);
         g[v2].push_back(v1);
     }
-
+    bool isNotCycle = true;
+    for(int i=1; i<=n; i++){
+        if(!vis[i])
+            if(!dfs(i, 0))
+                isNotCycle = false;
+    }
+    cout << !isNotCycle << endl;
     return 0;
 }
