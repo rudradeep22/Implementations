@@ -1,48 +1,62 @@
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
-void addEdge(vector<int> adj[], int v1, int v2){
-    adj[v1].push_back(v2);
-    adj[v2].push_back(v1);
-}
-
-vector<int> bfs(vector<int> adj[], int V){
-    bool vis[V] = {false};
-    vis[0] = true;
-    queue<int> q;
-    vector<int> ans;
-    q.push(0);
-    while(!q.empty()){
-        int node = q.front();
-        q.pop();
-        ans.push_back(node);
-
-        for(auto nb : adj[node]){
-            if(!vis[nb]){
-                vis[nb] = true;
-                q.push(nb);
+// } Driver Code Ends
+class Solution {
+  public:
+    // Function to return Breadth First Traversal of given graph.
+    vector<int> bfsOfGraph(int V, vector<int> adj[]) {
+        vector<int> ans;
+        int vis[V] ;
+        for(int i=0; i<V; i++){
+            vis[i] = 0;
+        }
+        queue<int> q;
+        q.push(0);
+        vis[0] = 1;
+        while(!q.empty()){
+            int u = q.front();
+            q.pop();
+            ans.push_back(u);
+            for(auto v : adj[u]){
+                if(!vis[v]){
+                    vis[v] = 1;
+                    q.push(v);
+                }
             }
         }
+        return ans;
     }
-    return ans;
-}
+};
 
-int main(){
-    vector<int> adj[500];
-    int n, m;
-    cin >> n >> m;
-    
-    for(int i=0; i<m; i++){
-        int v1, v2;
-        cin >> v1 >> v2;
-        addEdge(adj, v1, v2);
-    }
-    
-    vector<int> ans = bfs(adj, n);
+//{ Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int V, E;
+        cin >> V >>
 
-    for(auto el : ans){
-        cout << el << " ";
+            E;
+
+        vector<int> adj[V];
+
+        for (int i = 0; i < E; i++) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+            // 		adj[v].push_back(u);
+        }
+        // string s1;
+        // cin>>s1;
+        Solution obj;
+        vector<int> ans = obj.bfsOfGraph(V, adj);
+        for (int i = 0; i < ans.size(); i++) {
+            cout << ans[i] << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
     return 0;
 }
+// } Driver Code Ends
