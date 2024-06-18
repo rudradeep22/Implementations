@@ -30,6 +30,28 @@ For weighed graphs prefereably
 
 Since at every step we need to find the vertex with minimum distance from the source vertex from the set of vertices currently not added to the `sptSet`, so we can use a `min_heap` for easier and efficient implementation.
 
+### Minimum Spanning Tree (Prim's algo)
+It is a Greedy algo. A group of edges that connect 2set of vertices in a graph is called a **cut**. So, at every step of Prim’s algorithm, we find a **cut** (of two sets, one contains the vertices already included in MST and other contains rest of the vertices), pick the minimum weight edge from the cut and include this vertex to MST Set (the set that contains already included vertices).
+
+**Algorithm :**
+* Create a set `mstSet` to keep track of vertices in MST. Initially, it's empty.
+* Assign a `key` value to all vertices of the graph as `INF`, but first vertex as 0. We'll begin with first one.
+* While `mstSet` doesn't contain all vertices: 
+    * Pick a vertex `u`, not in `mstSet`, that has minimum `key` value.
+    * Push `u` into `mstSet`.
+    * Update `key` for all adjacent vertices. For a vertex `v`,  
+        `key[v] = min(key[v], w[u, v])`
+
+The `key` helps us choose the minimum weight of the cut.
+
+### Kosaraju's algo for Strongly Connected Components
+A directed component is strongly connected if there is a path between all pairs of vertices. 
+**Algorithm :**
+* Create a stack `st` and do **DFS** trversal on the graph. In **DFS** traversal, after calling recursive **DFS** for adjacent vertices of a vertex, push the vertex to `st`.
+* Reverse all directions of edges to get the _transpoed graph_.
+* Pop a vertex `v` from the stack `st`. Do **DFS** from v as source and this prints the SCC containing v.
+* Count all such **DFS** calls to get the number of SCCs.
+
 
 
 
