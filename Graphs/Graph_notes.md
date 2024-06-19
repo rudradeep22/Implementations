@@ -17,7 +17,7 @@ Linear ordering of vertices so that for every directed edge `uv`, `u` comes befo
 So, this algo can also be used to find cycle in directed graph.
 
 ### Dijkstra's algo for shortest path  
-For weighed graphs prefereably  
+For weighed graphs prefereably. Doesn't work with negative weight edges.   
 **Algorithm :**
 * Create a set `sptSet` (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e., whose minimum distance from source is calculated and finalized. Initially, this set is empty.
 * Assign `dis` value to all vertices as `INF` and for source as 0.
@@ -48,9 +48,23 @@ The `key` helps us choose the minimum weight of the cut.
 A directed component is strongly connected if there is a path between all pairs of vertices. 
 **Algorithm :**
 * Create a stack `st` and do **DFS** trversal on the graph. In **DFS** traversal, after calling recursive **DFS** for adjacent vertices of a vertex, push the vertex to `st`.
-* Reverse all directions of edges to get the _transpoed graph_.
+* Reverse all directions of edges to get the _transposed graph_.
 * Pop a vertex `v` from the stack `st`. Do **DFS** from v as source and this prints the SCC containing v.
 * Count all such **DFS** calls to get the number of SCCs.
+
+### Bellman Ford algo for shortest path
+Problem is similar to **Dijkstra** but while **Dijkstra** works with TC = `O(VlogV)`, Bellman-ford takes `O(VE)`. But, this also works for graphs with negative weight edges, unlike **Dijkstra**.  
+If there is a negative weight cycle, then shortest distances are not calculated, negative weight cycle is reported.  
+
+**Algorithm :**  
+* Create a `dis[]` with all distances as `INF` except source vertex as 0
+* Do the following `|V|-1` times:
+    * for each edge `u-v`,  `dis[v] = min(dis[v], dis[u] + w[u,v])`
+* Now check for negative weight cycle. For each edge `u-v` check:   
+    `dis[v] > dis[u] + w[u,v]`  
+    If true, then Graph **has** negative weight cycle 
+
+
 
 
 
