@@ -64,6 +64,24 @@ If there is a negative weight cycle, then shortest distances are not calculated,
     `dis[v] > dis[u] + w[u,v]`  
     If true, then Graph **has** negative weight cycle 
 
+### Articulation points (or Cut vertices)  
+A vertex in undirected graph is Articulation point if removing it disconnects the graph or increases the number of components.
+
+**Intuition :** Consider the DFS tree. A vertex `u` is an articulation point if :  
+    <ol>
+        <li>`u` is the root and it has at least 2 children</li>
+        <li>`u` has a child `v` such that any vertex in the subtree rooted at `v` does not have a back-edge to any ancestor of `u`</li>
+        <li>Leaf is never articulation point</li>
+    </ol>
+**Algorithm :**  
+* Do DFS traversal of the graph. Maintain a `parent[]` array, where `parent[u]` stores parent of vertex `u`.
+* 1st case is easy to check, check if `u` is a root and if it has 2 or more children
+* For 2nd case, maintain a `disc[]` array to store discovery time of vertices. For every node `u`, we need to find out the earliest visited vertex (the vertex with minimum discovery time) that can be reached from subtree rooted with u. So we maintain an additional array `low[]` which is defined as follows.   
+`low[u] = min(disc[u], disc[w])`  
+where `w` is an ancestor of `u` and there is a back edge from 
+some descendant of `u` to `w`.
+
+
 
 
 
