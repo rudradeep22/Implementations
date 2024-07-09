@@ -2,7 +2,7 @@
 ### Detect cycle in Directed Graph  
 Cycle exists in graph only if back edge is present in the graph. Use DFS to traverse graph and keep record of the vertices in recursion stack at present by backtracking. If current vertex is already there in `rec_stack` then cycle exists. Otherwise no.
 
-### Topological Sorting (Kahn's BFS)
+### [Topological Sorting (Kahn's BFS)](./toposort(Kahns).cpp)
 Linear ordering of vertices so that for every directed edge `uv`, `u` comes before `v` in the ordering. Only for **Directed Acyclic Graphs**.   
 **Algorithm :**  
 * Calculate in degree of each vertex present in DAG, and `visited_nodes = 0`
@@ -16,7 +16,7 @@ Linear ordering of vertices so that for every directed edge `uv`, `u` comes befo
 
 So, this algo can also be used to find cycle in directed graph.
 
-### Dijkstra's algo for shortest path  
+### [Dijkstra's algo for shortest path](./dijkstra.cpp)
 For weighed graphs prefereably. Doesn't work with negative weight edges.   
 **Algorithm :**
 * Create a set `sptSet` (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e., whose minimum distance from source is calculated and finalized. Initially, this set is empty.
@@ -30,7 +30,7 @@ For weighed graphs prefereably. Doesn't work with negative weight edges.
 
 Since at every step we need to find the vertex with minimum distance from the source vertex from the set of vertices currently not added to the `sptSet`, so we can use a `min_heap` for easier and efficient implementation.
 
-### Minimum Spanning Tree (Prim's algo)
+### [Minimum Spanning Tree (Prim's algo)](./mst(prims).cpp)
 It is a Greedy algo. A group of edges that connect 2set of vertices in a graph is called a **cut**. So, at every step of Prim’s algorithm, we find a **cut** (of two sets, one contains the vertices already included in MST and other contains rest of the vertices), pick the minimum weight edge from the cut and include this vertex to MST Set (the set that contains already included vertices).
 
 **Algorithm :**
@@ -44,7 +44,7 @@ It is a Greedy algo. A group of edges that connect 2set of vertices in a graph i
 
 The `key` helps us choose the minimum weight of the cut.
 
-### Kosaraju's algo for Strongly Connected Components
+### [Kosaraju's algo for Strongly Connected Components](./kosaraju.cpp)
 A directed component is strongly connected if there is a path between all pairs of vertices. 
 **Algorithm :**
 * Create a stack `st` and do **DFS** trversal on the graph. In **DFS** traversal, after calling recursive **DFS** for adjacent vertices of a vertex, push the vertex to `st`.
@@ -52,7 +52,7 @@ A directed component is strongly connected if there is a path between all pairs 
 * Pop a vertex `v` from the stack `st`. Do **DFS** from v as source and this prints the SCC containing v.
 * Count all such **DFS** calls to get the number of SCCs.
 
-### Bellman Ford algo for shortest path
+### [Bellman Ford algo for shortest path](./bellmanford.cpp)
 Problem is similar to **Dijkstra** but while **Dijkstra** works with TC = `O(VlogV)`, Bellman-ford takes `O(VE)`. But, this also works for graphs with negative weight edges, unlike **Dijkstra**.  
 If there is a negative weight cycle, then shortest distances are not calculated, negative weight cycle is reported.  
 
@@ -81,7 +81,20 @@ A vertex in undirected graph is Articulation point if removing it disconnects th
 where `w` is an ancestor of `u` and there is a back edge from 
 some descendant of `u` to `w`.
 
+### Floyd Warshall Algo
+Finds out shortest path between 2 nodes between all possible nodes in directed graphs  
 
+**Input :** `matrix[i][j]` represent edge weight from `i` to `j`, and -1 if no edge exists  
+**Output :** `output[i][j]` represent shortest dist b/w `i` and `j`   
+**Algorithm :**  Basically apply this formula  
+`matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])`,   
+where i = source node, j = destination node, and k = the node via which we are reaching from i to j.  
+Brute force through all possible `k` and find out minimum dist.  
+
+**How to detect a negative cycle using the Floyd Warshall algorithm?**  
+* Cost of reaching a node from itself must be 0.
+* If we follow negative cycle path, then min distance will be < 0 
+* So, just check for `output[i][i] < 0` to detect negative cycles  
 
 
 
